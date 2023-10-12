@@ -40,7 +40,10 @@ resource "vault_database_secret_backend_role" "default" {
     "CREATE USER [{{name}}] FOR LOGIN [{{name}}];",
     "EXEC sp_addrolemember db_datareader, [{{name}}];",
   ]
-  revocation_statements = ["DROP USER [{{name}}];"]
+  revocation_statements = [
+    "USE [${google_sql_database.default.name}];",
+    "DROP LOGIN [{{name}}];"
+    ]
 }
 
 # configure a static role with period-based rotations
