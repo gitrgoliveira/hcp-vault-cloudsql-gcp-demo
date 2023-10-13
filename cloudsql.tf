@@ -5,11 +5,10 @@ variable "vault_address" {
 data "dns_a_record_set" "google" {
   host = replace(
     replace(
-        trimsuffix(var.vault_address,"/"), ":8200", ""),
+    trimsuffix(var.vault_address, "/"), ":8200", ""),
     "https://",
   "")
 }
-
 
 resource "google_sql_database_instance" "default" {
   provider = google-beta
